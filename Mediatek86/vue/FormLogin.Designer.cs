@@ -116,7 +116,7 @@ namespace Mediatek86.vue
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnConnect);
             this.Name = "FormLogin";
-            this.Text = "FormLogin";
+            this.Text = "Espace de connexion";
             this.Load += new System.EventHandler(this.FormLogin_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
