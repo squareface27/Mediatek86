@@ -1,6 +1,9 @@
 ﻿
 namespace Mediatek86
 {
+    /// <summary>
+    /// Form1
+    /// </summary>
     partial class Form1
     {
         /// <summary>

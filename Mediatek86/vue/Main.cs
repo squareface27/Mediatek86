@@ -14,13 +14,18 @@ namespace Mediatek86.vue
 {
     public partial class Main : Form
     {
-
+        /// <summary>
+        /// Main()
+        /// </summary>
         public Main()
         {
             InitializeComponent();
 
         }
 
+        /// <summary>
+        /// GetDataGridView()
+        /// </summary>
         public DataGridView GetDataGridView()
         {
             return dataGridView1;
@@ -30,6 +35,9 @@ namespace Mediatek86.vue
         {
             loadData();
         }
+        /// <summary>
+        /// loadData()
+        /// </summary>
         public void loadData()
         {
             // Empêcher le redimensionnement de la fenêtre

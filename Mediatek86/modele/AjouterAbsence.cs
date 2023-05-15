@@ -12,6 +12,9 @@ namespace Mediatek86.modele
 {
     public partial class AjouterAbsence : Form
     {
+        /// <summary>
+        /// AjouterAbsence
+        /// </summary>
         public AjouterAbsence()
         {
             InitializeComponent();

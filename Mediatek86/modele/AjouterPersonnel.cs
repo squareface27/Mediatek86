@@ -11,8 +11,14 @@ using System.Windows.Forms;
 
 namespace Mediatek86.vue
 {
+    /// <summary>
+    /// AjouterPersonnel
+    /// </summary>
     public partial class AjouterPersonnel : Form
     {
+        /// <summary>
+        /// AjouterPersonnel
+        /// </summary>
         public AjouterPersonnel()
         {
             InitializeComponent();
@@ -95,7 +101,7 @@ namespace Mediatek86.vue
                 mainForm.loadData();
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 MessageBox.Show("Merci de remplir tout les champs");
             }

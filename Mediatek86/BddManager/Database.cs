@@ -23,7 +23,7 @@ namespace Mediatek86
                 mySqlConnection.Open();
                 return true;
             }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return false;
             }
@@ -37,7 +37,7 @@ namespace Mediatek86
                 mySqlConnection.Close();
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

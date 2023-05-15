@@ -1,6 +1,9 @@
 ﻿
 namespace Mediatek86.vue
 {
+    /// <summary>
+    /// Main
+    /// </summary>
     partial class Main
     {
         /// <summary>

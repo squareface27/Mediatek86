@@ -11,7 +11,10 @@ namespace Mediatek86.modele
         private readonly int personnelId;
         private readonly Main formMain;
 
-        public  ModifierPersonnel(int personnelId, Main formMain)
+        /// <summary>
+        /// ModifierPersonnel
+        /// </summary>
+        public ModifierPersonnel(int personnelId, Main formMain)
         {
             InitializeComponent();
             this.personnelId = personnelId;

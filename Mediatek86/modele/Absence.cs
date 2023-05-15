@@ -11,10 +11,16 @@ using System.Windows.Forms;
 
 namespace Mediatek86.modele
 {
+    /// <summary>
+    /// Absence
+    /// </summary>
     public partial class Absence : Form
     {
         private int personnelId;
 
+        /// <summary>
+        /// Asence
+        /// </summary>
         public Absence(int personnelId)
         {
             InitializeComponent();
@@ -25,6 +31,9 @@ namespace Mediatek86.modele
         }
 
 
+        /// <summary>
+        /// loadData
+        /// </summary>
         public void loadData()
         {
             // Empêcher le redimensionnement de la fenêtre

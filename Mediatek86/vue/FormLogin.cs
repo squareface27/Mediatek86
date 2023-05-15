@@ -13,8 +13,15 @@ using MySql.Data.MySqlClient;
 
 namespace Mediatek86.vue
 {
+
+    /// <summary>
+    /// FormLogin
+    /// </summary>
     public partial class FormLogin : Form
     {
+        /// <summary>
+        /// FormLogin()
+        /// </summary>
         public FormLogin()
         {
             InitializeComponent();
