@@ -70,11 +70,17 @@ namespace Mediatek86.vue
                 listePersonnel.DataSource = bindingSource;
 
 
-                // Redimensionner automatiquement les colonnes pour remplir complètement le DataGridView + désactiver le redimmensionnement mannuel + définition de la hauteur à 50px
+                // Redimensionner automatiquement les colonnes pour remplir complètement le DataGridView (Liste Personnel) + désactiver le redimmensionnement mannuel + définition de la hauteur à 50px
                 listePersonnel.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 listePersonnel.RowTemplate.Height = 50;
                 listePersonnel.AllowUserToResizeColumns = false;
                 listePersonnel.AllowUserToResizeRows = false;
+
+                // Redimensionner automatiquement les colonnes pour remplir complètement le DataGridView (Absence) + désactiver le redimmensionnement mannuel + définition de la hauteur à 50px
+                listeAbsence.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                listeAbsence.RowTemplate.Height = 50;
+                listeAbsence.AllowUserToResizeColumns = false;
+                listeAbsence.AllowUserToResizeRows = false;
 
                 database.close_db();
             }
@@ -273,7 +279,7 @@ namespace Mediatek86.vue
 
         }
 
-        private void btnAnnulDev_Click(object sender, EventArgs e)
+        private void btnAnnulerPersonnel_Click(object sender, EventArgs e)
         {
             // Désactiver les zones de texte de modification
             txtMail.Enabled = false;
@@ -336,6 +342,45 @@ namespace Mediatek86.vue
                     MessageBox.Show("Une erreur est survenue lors de la mise à jour du personnel : " + ex.Message);
                 }
 
+        }
+
+        private void buttonAfficherAbsence_Click(object sender, EventArgs e)
+        {
+            if (listePersonnel.SelectedRows.Count == 1)
+            {
+                // Récupérer l'ID du personnel sélectionné
+                int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
+
+                try
+                {
+                    var database = new Database();
+                    database.connect_db();
+
+                    // Construire la requête pour récupérer les absences du personnel sélectionné
+                    string query = "SELECT * FROM Absence WHERE IDPERSONNEL = @personnelId";
+                    MySqlCommand cmd = new MySqlCommand(query);
+                    cmd.Connection = database.mySqlConnection;
+                    cmd.Parameters.AddWithValue("@personnelId", personnelId);
+
+                    // Exécuter la requête et récupérer les résultats dans un DataTable
+                    DataTable absencesTable = new DataTable();
+                    using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                    {
+                        adapter.Fill(absencesTable);
+                    }
+
+                    // Afficher les résultats dans le deuxième DataGridView
+                    listeAbsence.DataSource = absencesTable;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Une erreur est survenue lors de la récupération des absences : " + ex.Message);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner une seule ligne pour afficher les absences.");
+            }
         }
     }
 }
