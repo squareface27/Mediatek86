@@ -84,18 +84,6 @@ namespace Mediatek86.vue
             }
         }
 
-        private void buttonDisconnect_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Êtes-vous sûr de vouloir vous déconnecter ?", "Confirmation de déconnexion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-
-            if (result == DialogResult.Yes)
-            {
-                FormLogin formLogin = new FormLogin();
-                formLogin.Show();
-                this.Hide();
-            }
-        }
-
 
         private void buttonAjouterPersonnel_Click(object sender, EventArgs e)
         {
@@ -140,42 +128,7 @@ namespace Mediatek86.vue
             }
         }
 
-        private void buttonAfficherAbsence_Click(object sender, EventArgs e)
-        {
-            // Vérifier si une seule ligne est sélectionnée
-            if (listePersonnel.SelectedRows.Count == 1)
-            {
-                // Récupérer l'ID du personnel sélectionné
-                int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
-
-                // Passer l'ID du personnel sélectionné au formulaire Absences
-                Absence Absence = new Absence(personnelId);
-                Absence.ShowDialog();
-                this.Hide();
-            }
-            else
-            {
-                MessageBox.Show("Veuillez sélectionner une seule ligne pour voir les absences.");
-            }
-        }
-
-        private void buttonModifierPersonnel_Click(object sender, EventArgs e)
-        {
-            // Vérifier si une seule ligne est sélectionnée
-            if (listePersonnel.SelectedRows.Count == 1)
-            {
-                // Récupérer l'ID du personnel sélectionné
-                int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
-
-                // Afficher le formulaire ModifierPersonnel
-                ModifierPersonnel formModifierPersonnel = new ModifierPersonnel(personnelId, this);
-                formModifierPersonnel.ShowDialog();
-            }
-            else
-            {
-                MessageBox.Show("Veuillez sélectionner une seule ligne pour modifier un personnel.");
-            }
-        }
+        
 
         private void buttonAjouterPersonnel_Click_1(object sender, EventArgs e)
         {
