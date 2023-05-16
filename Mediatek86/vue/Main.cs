@@ -28,7 +28,7 @@ namespace Mediatek86.vue
         /// </summary>
         public DataGridView GetDataGridView()
         {
-            return dataGridView1;
+            return listePersonnel;
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -36,7 +36,7 @@ namespace Mediatek86.vue
             loadData();
         }
         /// <summary>
-        /// loadData()
+        /// Insertion des données dans dataGridView
         /// </summary>
         public void loadData()
         {
@@ -58,14 +58,14 @@ namespace Mediatek86.vue
                 BindingSource bindingSource = new BindingSource();
                 bindingSource.DataSource = dt;
 
-                dataGridView1.DataSource = bindingSource;
+                listePersonnel.DataSource = bindingSource;
+
 
                 // Redimensionner automatiquement les colonnes pour remplir complètement le DataGridView + désactiver le redimmensionnement mannuel + définition de la hauteur à 50px
-                dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-                dataGridView1.RowTemplate.Height = 50;
-                dataGridView1.AllowUserToResizeColumns = false;
-                dataGridView1.AllowUserToResizeRows = false;
-
+                listePersonnel.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+                listePersonnel.RowTemplate.Height = 50;
+                listePersonnel.AllowUserToResizeColumns = false;
+                listePersonnel.AllowUserToResizeRows = false;
 
                 database.close_db();
             }
@@ -96,24 +96,12 @@ namespace Mediatek86.vue
 
         }
 
-        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dataGridView1.SelectedRows.Count > 0)
-            {
-                buttonSupprimerPersonnel1.Enabled = true;
-            }
-            else
-            {
-                buttonSupprimerPersonnel1.Enabled = false;
-            }
-        }
-
 
         private void buttonSupprimerPersonnel_Click(object sender, EventArgs e)
         {
-            if (dataGridView1.SelectedRows.Count == 1)
+            if (listePersonnel.SelectedRows.Count == 1)
             {
-                int personnelId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["IDPERSONNEL"].Value);
+                int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
 
                 try
                 {
@@ -130,7 +118,7 @@ namespace Mediatek86.vue
                     DataTable dataTable = new DataTable();
                     MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Personnel", database.mySqlConnection);
                     dataAdapter.Fill(dataTable);
-                    dataGridView1.DataSource = dataTable;
+                    listePersonnel.DataSource = dataTable;
                 }
                 catch (Exception)
                 {
@@ -146,10 +134,10 @@ namespace Mediatek86.vue
         private void buttonAfficherAbsence_Click(object sender, EventArgs e)
         {
             // Vérifier si une seule ligne est sélectionnée
-            if (dataGridView1.SelectedRows.Count == 1)
+            if (listePersonnel.SelectedRows.Count == 1)
             {
                 // Récupérer l'ID du personnel sélectionné
-                int personnelId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["IDPERSONNEL"].Value);
+                int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
 
                 // Passer l'ID du personnel sélectionné au formulaire Absences
                 Absence Absence = new Absence(personnelId);
@@ -165,10 +153,10 @@ namespace Mediatek86.vue
         private void buttonModifierPersonnel_Click(object sender, EventArgs e)
         {
             // Vérifier si une seule ligne est sélectionnée
-            if (dataGridView1.SelectedRows.Count == 1)
+            if (listePersonnel.SelectedRows.Count == 1)
             {
                 // Récupérer l'ID du personnel sélectionné
-                int personnelId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["IDPERSONNEL"].Value);
+                int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
 
                 // Afficher le formulaire ModifierPersonnel
                 ModifierPersonnel formModifierPersonnel = new ModifierPersonnel(personnelId, this);
@@ -190,10 +178,10 @@ namespace Mediatek86.vue
         private void buttonModifierPersonnel_Click_1(object sender, EventArgs e)
         {
             // Vérifier si une seule ligne est sélectionnée
-            if (dataGridView1.SelectedRows.Count == 1)
+            if (listePersonnel.SelectedRows.Count == 1)
             {
                 // Récupérer l'ID du personnel sélectionné
-                int personnelId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["IDPERSONNEL"].Value);
+                int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
 
                 // Afficher le formulaire ModifierPersonnel
                 ModifierPersonnel formModifierPersonnel = new ModifierPersonnel(personnelId, this);
@@ -207,8 +195,40 @@ namespace Mediatek86.vue
 
         private void buttonSupprimerPersonnel_Click_1(object sender, EventArgs e)
         {
-            
+            {
+                if (listePersonnel.SelectedRows.Count == 1)
+                {
+                    int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
+
+                    try
+                    {
+                        var database = new Database();
+                        database.connect_db();
+
+                        MySqlCommand cmd = new MySqlCommand("DELETE FROM Personnel WHERE IDPERSONNEL = @PersonnelId");
+                        cmd.Parameters.AddWithValue("@PersonnelId", personnelId);
+                        cmd.Connection = database.mySqlConnection;
+                        cmd.ExecuteNonQuery();
+                        MessageBox.Show("Personnel supprimé avec succès !");
+
+                        // Recharger les données du DataGridView
+                        DataTable dataTable = new DataTable();
+                        MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Personnel", database.mySqlConnection);
+                        dataAdapter.Fill(dataTable);
+                        listePersonnel.DataSource = dataTable;
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Une erreur est survenue lors de la suppression du personnel");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Veuillez sélectionner une seule ligne pour modifier un personnel.");
+                }
+            }
 
         }
+
     }
 }

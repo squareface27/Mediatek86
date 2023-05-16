@@ -32,16 +32,11 @@ namespace Mediatek86.vue
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.buttonDisconnect = new System.Windows.Forms.Button();
-            this.buttonAjouterPersonnel1 = new System.Windows.Forms.Button();
-            this.buttonModifierPersonnel1 = new System.Windows.Forms.Button();
-            this.buttonSupprimerPersonnel1 = new System.Windows.Forms.Button();
-            this.buttonAfficherAbsence = new System.Windows.Forms.Button();
             this.buttonSupprimerPersonnel = new System.Windows.Forms.Button();
             this.buttonModifierPersonnel = new System.Windows.Forms.Button();
             this.buttonAjouterPersonnel = new System.Windows.Forms.Button();
-            this.dgvDeveloppeurs = new System.Windows.Forms.DataGridView();
+            this.listePersonnel = new System.Windows.Forms.DataGridView();
             this.btnAddProfil = new System.Windows.Forms.Button();
             this.btnDelProfil = new System.Windows.Forms.Button();
             this.txtProfil = new System.Windows.Forms.TextBox();
@@ -66,75 +61,22 @@ namespace Mediatek86.vue
             this.btnEnregPwd = new System.Windows.Forms.Button();
             this.txtPwd2 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDeveloppeurs)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listePersonnel)).BeginInit();
             this.grbDeveloppeur.SuspendLayout();
             this.grbLesDeveloppeurs.SuspendLayout();
             this.grbPwd.SuspendLayout();
             this.SuspendLayout();
             // 
-            // dataGridView1
-            // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(47, 33);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(448, 372);
-            this.dataGridView1.TabIndex = 0;
-            // 
             // buttonDisconnect
             // 
             this.buttonDisconnect.BackColor = System.Drawing.Color.Coral;
-            this.buttonDisconnect.Location = new System.Drawing.Point(169, 457);
+            this.buttonDisconnect.Location = new System.Drawing.Point(1455, 31);
             this.buttonDisconnect.Name = "buttonDisconnect";
             this.buttonDisconnect.Size = new System.Drawing.Size(75, 23);
             this.buttonDisconnect.TabIndex = 1;
             this.buttonDisconnect.Text = "Se déconnecter";
             this.buttonDisconnect.UseVisualStyleBackColor = false;
             this.buttonDisconnect.Click += new System.EventHandler(this.buttonDisconnect_Click);
-            // 
-            // buttonAjouterPersonnel1
-            // 
-            this.buttonAjouterPersonnel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonAjouterPersonnel1.Location = new System.Drawing.Point(35, 411);
-            this.buttonAjouterPersonnel1.Name = "buttonAjouterPersonnel1";
-            this.buttonAjouterPersonnel1.Size = new System.Drawing.Size(78, 23);
-            this.buttonAjouterPersonnel1.TabIndex = 2;
-            this.buttonAjouterPersonnel1.Text = "Ajouter un personnel";
-            this.buttonAjouterPersonnel1.UseVisualStyleBackColor = false;
-            this.buttonAjouterPersonnel1.Click += new System.EventHandler(this.buttonAjouterPersonnel_Click);
-            // 
-            // buttonModifierPersonnel1
-            // 
-            this.buttonModifierPersonnel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonModifierPersonnel1.Location = new System.Drawing.Point(169, 411);
-            this.buttonModifierPersonnel1.Name = "buttonModifierPersonnel1";
-            this.buttonModifierPersonnel1.Size = new System.Drawing.Size(80, 23);
-            this.buttonModifierPersonnel1.TabIndex = 3;
-            this.buttonModifierPersonnel1.Text = "Modifier un personnel";
-            this.buttonModifierPersonnel1.UseVisualStyleBackColor = false;
-            this.buttonModifierPersonnel1.Click += new System.EventHandler(this.buttonModifierPersonnel_Click);
-            // 
-            // buttonSupprimerPersonnel1
-            // 
-            this.buttonSupprimerPersonnel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonSupprimerPersonnel1.Location = new System.Drawing.Point(284, 411);
-            this.buttonSupprimerPersonnel1.Name = "buttonSupprimerPersonnel1";
-            this.buttonSupprimerPersonnel1.Size = new System.Drawing.Size(88, 23);
-            this.buttonSupprimerPersonnel1.TabIndex = 4;
-            this.buttonSupprimerPersonnel1.Text = "Supprimer un personnel";
-            this.buttonSupprimerPersonnel1.UseVisualStyleBackColor = false;
-            this.buttonSupprimerPersonnel1.Click += new System.EventHandler(this.buttonSupprimerPersonnel_Click);
-            // 
-            // buttonAfficherAbsence
-            // 
-            this.buttonAfficherAbsence.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.buttonAfficherAbsence.Location = new System.Drawing.Point(394, 411);
-            this.buttonAfficherAbsence.Name = "buttonAfficherAbsence";
-            this.buttonAfficherAbsence.Size = new System.Drawing.Size(65, 23);
-            this.buttonAfficherAbsence.TabIndex = 5;
-            this.buttonAfficherAbsence.Text = "Afficher les absences";
-            this.buttonAfficherAbsence.UseVisualStyleBackColor = false;
-            this.buttonAfficherAbsence.Click += new System.EventHandler(this.buttonAfficherAbsence_Click);
             // 
             // buttonSupprimerPersonnel
             // 
@@ -166,21 +108,21 @@ namespace Mediatek86.vue
             this.buttonAjouterPersonnel.UseVisualStyleBackColor = true;
             this.buttonAjouterPersonnel.Click += new System.EventHandler(this.buttonAjouterPersonnel_Click_1);
             // 
-            // dgvDeveloppeurs
+            // listePersonnel
             // 
-            this.dgvDeveloppeurs.AllowUserToAddRows = false;
-            this.dgvDeveloppeurs.AllowUserToDeleteRows = false;
-            this.dgvDeveloppeurs.AllowUserToResizeRows = false;
-            this.dgvDeveloppeurs.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvDeveloppeurs.Location = new System.Drawing.Point(6, 19);
-            this.dgvDeveloppeurs.MultiSelect = false;
-            this.dgvDeveloppeurs.Name = "dgvDeveloppeurs";
-            this.dgvDeveloppeurs.ReadOnly = true;
-            this.dgvDeveloppeurs.RowHeadersVisible = false;
-            this.dgvDeveloppeurs.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dgvDeveloppeurs.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvDeveloppeurs.Size = new System.Drawing.Size(581, 206);
-            this.dgvDeveloppeurs.TabIndex = 0;
+            this.listePersonnel.AllowUserToAddRows = false;
+            this.listePersonnel.AllowUserToDeleteRows = false;
+            this.listePersonnel.AllowUserToResizeRows = false;
+            this.listePersonnel.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.listePersonnel.Location = new System.Drawing.Point(6, 19);
+            this.listePersonnel.MultiSelect = false;
+            this.listePersonnel.Name = "listePersonnel";
+            this.listePersonnel.ReadOnly = true;
+            this.listePersonnel.RowHeadersVisible = false;
+            this.listePersonnel.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            this.listePersonnel.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.listePersonnel.Size = new System.Drawing.Size(581, 206);
+            this.listePersonnel.TabIndex = 0;
             // 
             // btnAddProfil
             // 
@@ -277,7 +219,7 @@ namespace Mediatek86.vue
             this.grbDeveloppeur.Controls.Add(this.txtPrenom);
             this.grbDeveloppeur.Controls.Add(this.label1);
             this.grbDeveloppeur.Controls.Add(this.txtNom);
-            this.grbDeveloppeur.Location = new System.Drawing.Point(785, 282);
+            this.grbDeveloppeur.Location = new System.Drawing.Point(23, 301);
             this.grbDeveloppeur.Name = "grbDeveloppeur";
             this.grbDeveloppeur.Size = new System.Drawing.Size(605, 129);
             this.grbDeveloppeur.TabIndex = 8;
@@ -339,8 +281,8 @@ namespace Mediatek86.vue
             this.grbLesDeveloppeurs.Controls.Add(this.buttonSupprimerPersonnel);
             this.grbLesDeveloppeurs.Controls.Add(this.buttonModifierPersonnel);
             this.grbLesDeveloppeurs.Controls.Add(this.buttonAjouterPersonnel);
-            this.grbLesDeveloppeurs.Controls.Add(this.dgvDeveloppeurs);
-            this.grbLesDeveloppeurs.Location = new System.Drawing.Point(785, 12);
+            this.grbLesDeveloppeurs.Controls.Add(this.listePersonnel);
+            this.grbLesDeveloppeurs.Location = new System.Drawing.Point(23, 31);
             this.grbLesDeveloppeurs.Name = "grbLesDeveloppeurs";
             this.grbLesDeveloppeurs.Size = new System.Drawing.Size(605, 264);
             this.grbLesDeveloppeurs.TabIndex = 7;
@@ -364,7 +306,7 @@ namespace Mediatek86.vue
             this.grbPwd.Controls.Add(this.txtPwd2);
             this.grbPwd.Controls.Add(this.txtPwd1);
             this.grbPwd.Controls.Add(this.label6);
-            this.grbPwd.Location = new System.Drawing.Point(785, 417);
+            this.grbPwd.Location = new System.Drawing.Point(23, 436);
             this.grbPwd.Name = "grbPwd";
             this.grbPwd.Size = new System.Drawing.Size(605, 77);
             this.grbPwd.TabIndex = 9;
@@ -424,17 +366,11 @@ namespace Mediatek86.vue
             this.Controls.Add(this.grbDeveloppeur);
             this.Controls.Add(this.grbLesDeveloppeurs);
             this.Controls.Add(this.grbPwd);
-            this.Controls.Add(this.buttonAfficherAbsence);
-            this.Controls.Add(this.buttonSupprimerPersonnel1);
-            this.Controls.Add(this.buttonModifierPersonnel1);
-            this.Controls.Add(this.buttonAjouterPersonnel1);
             this.Controls.Add(this.buttonDisconnect);
-            this.Controls.Add(this.dataGridView1);
             this.Name = "Main";
             this.Text = "Main";
             this.Load += new System.EventHandler(this.Main_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvDeveloppeurs)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.listePersonnel)).EndInit();
             this.grbDeveloppeur.ResumeLayout(false);
             this.grbDeveloppeur.PerformLayout();
             this.grbLesDeveloppeurs.ResumeLayout(false);
@@ -445,17 +381,11 @@ namespace Mediatek86.vue
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button buttonDisconnect;
-        private System.Windows.Forms.Button buttonAjouterPersonnel1;
-        private System.Windows.Forms.Button buttonModifierPersonnel1;
-        private System.Windows.Forms.Button buttonSupprimerPersonnel1;
-        private System.Windows.Forms.Button buttonAfficherAbsence;
         private System.Windows.Forms.Button buttonSupprimerPersonnel;
         private System.Windows.Forms.Button buttonModifierPersonnel;
         private System.Windows.Forms.Button buttonAjouterPersonnel;
-        private System.Windows.Forms.DataGridView dgvDeveloppeurs;
+        private System.Windows.Forms.DataGridView listePersonnel;
         private System.Windows.Forms.Button btnAddProfil;
         private System.Windows.Forms.Button btnDelProfil;
         private System.Windows.Forms.TextBox txtProfil;
