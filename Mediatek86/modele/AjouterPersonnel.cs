@@ -100,6 +100,7 @@ namespace Mediatek86.vue
                 Main mainForm = (Main)this.Owner;
                 mainForm.loadData();
 
+
             }
             catch (Exception)
             {
