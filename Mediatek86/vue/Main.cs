@@ -40,10 +40,19 @@ namespace Mediatek86.vue
         /// </summary>
         public void loadData()
         {
+            GetService();
+
             // Empêcher le redimensionnement de la fenêtre
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             // Désactiver le bouton "Agrandir"
             this.MaximizeBox = false;
+
+            // Désactiver les zones de texte de modification
+            txtMail.Enabled = false;
+            txtPrenom.Enabled = false;
+            txtNom.Enabled = false;
+            txtTel.Enabled = false;
+            cboService.Enabled = false;
 
             var database = new Database();
             if (database.connect_db())
@@ -175,21 +184,102 @@ namespace Mediatek86.vue
 
         }
 
+        /// <summary>
+        /// ServiceName
+        /// </summary>
+        public class ServiceName
+        {
+            /// <summary>
+            /// Name
+            /// </summary>
+            public string Name { get; set; }
+            /// <summary>
+            /// Id
+            /// </summary>
+            public int Id { get; set; }
+
+            /// <summary>
+            /// ServiceName
+            /// </summary>
+            public ServiceName(string name, int id)
+            {
+                Name = name;
+                Id = id;
+            }
+
+            /// <summary>
+            /// ToString()
+            /// </summary>
+            public override string ToString()
+            {
+                return Name;
+            }
+        }
+
+        private List<ServiceName> services;
+        private void GetService()
+        {
+            services = new List<ServiceName>();
+
+            // Parcourez les lignes du DataGridView et ajoutez les services à la liste
+            foreach (DataGridViewRow row in listePersonnel.Rows)
+            {
+                string service = row.Cells["IDSERVICE"].Value.ToString();
+                int serviceId = Convert.ToInt32(row.Cells["IDSERVICE"].Value);
+                if (!services.Any(s => s.Id == serviceId))
+                {
+                    services.Add(new ServiceName(service, serviceId));
+                }
+            }
+
+            // Ajoutez les autres services disponibles à la liste
+            services.Add(new ServiceName("Administratif", 1));
+            services.Add(new ServiceName("Médiation culturelle", 2));
+            services.Add(new ServiceName("Prêt", 3));
+
+            // Liez la liste à la ComboBox
+            cboService.DataSource = services;
+        }
+
+
         private void buttonModifierPersonnel_Click_1(object sender, EventArgs e)
         {
-            // Vérifier si une seule ligne est sélectionnée
             if (listePersonnel.SelectedRows.Count == 1)
             {
-                // Récupérer l'ID du personnel sélectionné
-                int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
+                // Récupérer les valeurs de la ligne sélectionnée
+                DataGridViewRow selectedRow = listePersonnel.SelectedRows[0];
+                string email = selectedRow.Cells["MAIL"].Value.ToString();
+                string prenom = selectedRow.Cells["PRENOM"].Value.ToString();
+                string nom = selectedRow.Cells["NOM"].Value.ToString();
+                string telephone = selectedRow.Cells["TEL"].Value.ToString();
 
-                // Afficher le formulaire ModifierPersonnel
-                ModifierPersonnel formModifierPersonnel = new ModifierPersonnel(personnelId, this);
-                formModifierPersonnel.ShowDialog();
+                int serviceId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDSERVICE"].Value);
+                ServiceName selectedService = services.Find(s => s.Id == serviceId);
+                cboService.SelectedItem = selectedService;
+
+
+
+                // ...
+
+                // Assigner les valeurs aux zones de texte
+                txtMail.Text = email;
+                txtPrenom.Text = prenom;
+                txtNom.Text = nom;
+                txtTel.Text = telephone;
+
+                // Activer les zones de texte pour modification
+                txtMail.Enabled = true;
+                txtPrenom.Enabled = true;
+                txtNom.Enabled = true;
+                txtTel.Enabled = true;
+                cboService.Enabled = true;
+
+
+                // ...
             }
             else
             {
-                MessageBox.Show("Veuillez sélectionner une seule ligne pour modifier un personnel.");
+                MessageBox.Show("Veuillez sélectionner une seule ligne pour modifier.");
             }
         }
 
@@ -230,5 +320,14 @@ namespace Mediatek86.vue
 
         }
 
+        private void btnAnnulDev_Click(object sender, EventArgs e)
+        {
+            // Désactiver les zones de texte de modification
+            txtMail.Enabled = false;
+            txtPrenom.Enabled = false;
+            txtNom.Enabled = false;
+            txtTel.Enabled = false;
+            cboService.Enabled = false;
+        }
     }
 }

@@ -37,12 +37,9 @@ namespace Mediatek86.vue
             this.buttonModifierPersonnel = new System.Windows.Forms.Button();
             this.buttonAjouterPersonnel = new System.Windows.Forms.Button();
             this.listePersonnel = new System.Windows.Forms.DataGridView();
-            this.btnAddProfil = new System.Windows.Forms.Button();
-            this.btnDelProfil = new System.Windows.Forms.Button();
-            this.txtProfil = new System.Windows.Forms.TextBox();
             this.btnAnnulDev = new System.Windows.Forms.Button();
             this.btnEnregDev = new System.Windows.Forms.Button();
-            this.cboProfil = new System.Windows.Forms.ComboBox();
+            this.cboService = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -116,31 +113,6 @@ namespace Mediatek86.vue
             this.listePersonnel.Size = new System.Drawing.Size(581, 206);
             this.listePersonnel.TabIndex = 0;
             // 
-            // btnAddProfil
-            // 
-            this.btnAddProfil.Location = new System.Drawing.Point(524, 98);
-            this.btnAddProfil.Name = "btnAddProfil";
-            this.btnAddProfil.Size = new System.Drawing.Size(21, 21);
-            this.btnAddProfil.TabIndex = 13;
-            this.btnAddProfil.Text = "+";
-            this.btnAddProfil.UseVisualStyleBackColor = true;
-            // 
-            // btnDelProfil
-            // 
-            this.btnDelProfil.Location = new System.Drawing.Point(524, 71);
-            this.btnDelProfil.Name = "btnDelProfil";
-            this.btnDelProfil.Size = new System.Drawing.Size(21, 21);
-            this.btnDelProfil.TabIndex = 12;
-            this.btnDelProfil.Text = "-";
-            this.btnDelProfil.UseVisualStyleBackColor = true;
-            // 
-            // txtProfil
-            // 
-            this.txtProfil.Location = new System.Drawing.Point(354, 98);
-            this.txtProfil.Name = "txtProfil";
-            this.txtProfil.Size = new System.Drawing.Size(161, 20);
-            this.txtProfil.TabIndex = 11;
-            // 
             // btnAnnulDev
             // 
             this.btnAnnulDev.Location = new System.Drawing.Point(87, 98);
@@ -149,6 +121,7 @@ namespace Mediatek86.vue
             this.btnAnnulDev.TabIndex = 10;
             this.btnAnnulDev.Text = "annuler";
             this.btnAnnulDev.UseVisualStyleBackColor = true;
+            this.btnAnnulDev.Click += new System.EventHandler(this.btnAnnulDev_Click);
             // 
             // btnEnregDev
             // 
@@ -159,22 +132,22 @@ namespace Mediatek86.vue
             this.btnEnregDev.Text = "enregistrer";
             this.btnEnregDev.UseVisualStyleBackColor = true;
             // 
-            // cboProfil
+            // cboService
             // 
-            this.cboProfil.FormattingEnabled = true;
-            this.cboProfil.Location = new System.Drawing.Point(354, 71);
-            this.cboProfil.Name = "cboProfil";
-            this.cboProfil.Size = new System.Drawing.Size(161, 21);
-            this.cboProfil.TabIndex = 8;
+            this.cboService.FormattingEnabled = true;
+            this.cboService.Location = new System.Drawing.Point(354, 71);
+            this.cboService.Name = "cboService";
+            this.cboService.Size = new System.Drawing.Size(161, 21);
+            this.cboService.TabIndex = 8;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(308, 74);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(29, 13);
+            this.label5.Size = new System.Drawing.Size(41, 13);
             this.label5.TabIndex = 8;
-            this.label5.Text = "profil";
+            this.label5.Text = "service";
             // 
             // label4
             // 
@@ -196,12 +169,9 @@ namespace Mediatek86.vue
             // 
             // modifierPersonnel
             // 
-            this.modifierPersonnel.Controls.Add(this.btnAddProfil);
-            this.modifierPersonnel.Controls.Add(this.btnDelProfil);
-            this.modifierPersonnel.Controls.Add(this.txtProfil);
             this.modifierPersonnel.Controls.Add(this.btnAnnulDev);
             this.modifierPersonnel.Controls.Add(this.btnEnregDev);
-            this.modifierPersonnel.Controls.Add(this.cboProfil);
+            this.modifierPersonnel.Controls.Add(this.cboService);
             this.modifierPersonnel.Controls.Add(this.label5);
             this.modifierPersonnel.Controls.Add(this.label4);
             this.modifierPersonnel.Controls.Add(this.label3);
@@ -306,12 +276,9 @@ namespace Mediatek86.vue
         private System.Windows.Forms.Button buttonModifierPersonnel;
         private System.Windows.Forms.Button buttonAjouterPersonnel;
         private System.Windows.Forms.DataGridView listePersonnel;
-        private System.Windows.Forms.Button btnAddProfil;
-        private System.Windows.Forms.Button btnDelProfil;
-        private System.Windows.Forms.TextBox txtProfil;
         private System.Windows.Forms.Button btnAnnulDev;
         private System.Windows.Forms.Button btnEnregDev;
-        private System.Windows.Forms.ComboBox cboProfil;
+        private System.Windows.Forms.ComboBox cboService;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
