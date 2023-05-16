@@ -10,6 +10,9 @@ using System.Windows.Forms;
 
 namespace Mediatek86.modele
 {
+    /// <summary>
+    /// AjouterAbsence
+    /// </summary>
     public partial class AjouterAbsence : Form
     {
         /// <summary>

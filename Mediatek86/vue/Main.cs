@@ -100,34 +100,47 @@ namespace Mediatek86.vue
         {
             if (dataGridView1.SelectedRows.Count > 0)
             {
-                buttonSupprimerPersonnel.Enabled = true;
+                buttonSupprimerPersonnel1.Enabled = true;
             }
             else
             {
-                buttonSupprimerPersonnel.Enabled = false;
+                buttonSupprimerPersonnel1.Enabled = false;
             }
         }
 
 
         private void buttonSupprimerPersonnel_Click(object sender, EventArgs e)
         {
+            if (dataGridView1.SelectedRows.Count == 1)
             {
-                // Vérifier si une seule ligne est sélectionnée
-                if (dataGridView1.SelectedRows.Count == 1)
-                {
-                    // Récupérer l'ID du personnel sélectionné
-                    int personnelId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["IDPERSONNEL"].Value);
+                int personnelId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["IDPERSONNEL"].Value);
 
-                    // Passer l'ID du personnel sélectionné au formulaire Absences
-                    Absence Absence = new Absence(personnelId);
-                    Absence.ShowDialog();
-                }
-                else
+                try
                 {
-                    MessageBox.Show("Veuillez sélectionner une seule ligne pour voir les absences.");
+                    var database = new Database();
+                    database.connect_db();
+
+                    MySqlCommand cmd = new MySqlCommand("DELETE FROM Personnel WHERE IDPERSONNEL = @PersonnelId");
+                    cmd.Parameters.AddWithValue("@PersonnelId", personnelId);
+                    cmd.Connection = database.mySqlConnection;
+                    cmd.ExecuteNonQuery();
+                    MessageBox.Show("Personnel supprimé avec succès !");
+
+                    // Recharger les données du DataGridView
+                    DataTable dataTable = new DataTable();
+                    MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Personnel", database.mySqlConnection);
+                    dataAdapter.Fill(dataTable);
+                    dataGridView1.DataSource = dataTable;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Une erreur est survenue lors de la suppression du personnel");
                 }
             }
-
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner une seule ligne pour modifier un personnel.");
+            }
         }
 
         private void buttonAfficherAbsence_Click(object sender, EventArgs e)
@@ -165,6 +178,37 @@ namespace Mediatek86.vue
             {
                 MessageBox.Show("Veuillez sélectionner une seule ligne pour modifier un personnel.");
             }
+        }
+
+        private void buttonAjouterPersonnel_Click_1(object sender, EventArgs e)
+        {
+                AjouterPersonnel formAjouterPersonnel = new AjouterPersonnel();
+                DialogResult result = formAjouterPersonnel.ShowDialog(this);
+
+        }
+
+        private void buttonModifierPersonnel_Click_1(object sender, EventArgs e)
+        {
+            // Vérifier si une seule ligne est sélectionnée
+            if (dataGridView1.SelectedRows.Count == 1)
+            {
+                // Récupérer l'ID du personnel sélectionné
+                int personnelId = Convert.ToInt32(dataGridView1.SelectedRows[0].Cells["IDPERSONNEL"].Value);
+
+                // Afficher le formulaire ModifierPersonnel
+                ModifierPersonnel formModifierPersonnel = new ModifierPersonnel(personnelId, this);
+                formModifierPersonnel.ShowDialog();
+            }
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner une seule ligne pour modifier un personnel.");
+            }
+        }
+
+        private void buttonSupprimerPersonnel_Click_1(object sender, EventArgs e)
+        {
+            
+
         }
     }
 }

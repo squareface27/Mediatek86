@@ -121,6 +121,12 @@
     <Compile Include="vue\FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="vue\FrmHabilitations.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="vue\FrmHabilitations.designer.cs">
+      <DependentUpon>FrmHabilitations.cs</DependentUpon>
+    </Compile>
     <Compile Include="vue\Main.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -150,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="vue\FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="vue\FrmHabilitations.resx">
+      <DependentUpon>FrmHabilitations.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="vue\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
