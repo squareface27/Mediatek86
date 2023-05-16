@@ -329,5 +329,60 @@ namespace Mediatek86.vue
             txtTel.Enabled = false;
             cboService.Enabled = false;
         }
+
+        private void btnEnregisterPersonnel_Click(object sender, EventArgs e)
+        {
+
+                // Récupérer l'ID du personnel sélectionné
+                int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
+
+                // Récupérer les nouvelles valeurs des zones de texte
+                string email = txtMail.Text;
+                string prenom = txtPrenom.Text;
+                string nom = txtNom.Text;
+                string telephone = txtTel.Text;
+
+                // Récupérer la valeur sélectionnée dans la ComboBox
+                ServiceName selectedService = (ServiceName)cboService.SelectedItem;
+                int serviceId = selectedService.Id;
+
+                try
+                {
+                    var database = new Database();
+                    database.connect_db();
+
+                    // Construire la requête de mise à jour
+                    string query = "UPDATE Personnel SET MAIL = @mail, PRENOM = @prenom, NOM = @nom, TEL = @tel, IDSERVICE = @idservice WHERE IDPERSONNEL = @personnelId";
+
+                    MySqlCommand cmd = new MySqlCommand(query);
+                    cmd.Connection = database.mySqlConnection;
+                    cmd.Parameters.AddWithValue("@mail", email);
+                    cmd.Parameters.AddWithValue("@prenom", prenom);
+                    cmd.Parameters.AddWithValue("@nom", nom);
+                    cmd.Parameters.AddWithValue("@tel", telephone);
+                    cmd.Parameters.AddWithValue("@idservice", serviceId);
+                    cmd.Parameters.AddWithValue("@personnelId", personnelId);
+
+                    // Exécuter la requête de mise à jour
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Personnel mis à jour avec succès !");
+
+                        // Recharger les données du DataGridView
+                        DataTable dataTable = new DataTable();
+                        MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Personnel", database.mySqlConnection);
+                        dataAdapter.Fill(dataTable);
+                        listePersonnel.DataSource = dataTable;
+                }
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Une erreur est survenue lors de la mise à jour du personnel : " + ex.Message);
+                }
+
+        }
     }
 }

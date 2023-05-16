@@ -38,7 +38,7 @@ namespace Mediatek86.vue
             this.buttonAjouterPersonnel = new System.Windows.Forms.Button();
             this.listePersonnel = new System.Windows.Forms.DataGridView();
             this.btnAnnulDev = new System.Windows.Forms.Button();
-            this.btnEnregDev = new System.Windows.Forms.Button();
+            this.btnEnregisterPersonnel = new System.Windows.Forms.Button();
             this.cboService = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -123,14 +123,15 @@ namespace Mediatek86.vue
             this.btnAnnulDev.UseVisualStyleBackColor = true;
             this.btnAnnulDev.Click += new System.EventHandler(this.btnAnnulDev_Click);
             // 
-            // btnEnregDev
+            // btnEnregisterPersonnel
             // 
-            this.btnEnregDev.Location = new System.Drawing.Point(6, 98);
-            this.btnEnregDev.Name = "btnEnregDev";
-            this.btnEnregDev.Size = new System.Drawing.Size(75, 23);
-            this.btnEnregDev.TabIndex = 9;
-            this.btnEnregDev.Text = "enregistrer";
-            this.btnEnregDev.UseVisualStyleBackColor = true;
+            this.btnEnregisterPersonnel.Location = new System.Drawing.Point(6, 98);
+            this.btnEnregisterPersonnel.Name = "btnEnregisterPersonnel";
+            this.btnEnregisterPersonnel.Size = new System.Drawing.Size(75, 23);
+            this.btnEnregisterPersonnel.TabIndex = 9;
+            this.btnEnregisterPersonnel.Text = "enregistrer";
+            this.btnEnregisterPersonnel.UseVisualStyleBackColor = true;
+            this.btnEnregisterPersonnel.Click += new System.EventHandler(this.btnEnregisterPersonnel_Click);
             // 
             // cboService
             // 
@@ -170,7 +171,7 @@ namespace Mediatek86.vue
             // modifierPersonnel
             // 
             this.modifierPersonnel.Controls.Add(this.btnAnnulDev);
-            this.modifierPersonnel.Controls.Add(this.btnEnregDev);
+            this.modifierPersonnel.Controls.Add(this.btnEnregisterPersonnel);
             this.modifierPersonnel.Controls.Add(this.cboService);
             this.modifierPersonnel.Controls.Add(this.label5);
             this.modifierPersonnel.Controls.Add(this.label4);
@@ -277,7 +278,7 @@ namespace Mediatek86.vue
         private System.Windows.Forms.Button buttonAjouterPersonnel;
         private System.Windows.Forms.DataGridView listePersonnel;
         private System.Windows.Forms.Button btnAnnulDev;
-        private System.Windows.Forms.Button btnEnregDev;
+        private System.Windows.Forms.Button btnEnregisterPersonnel;
         private System.Windows.Forms.ComboBox cboService;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
