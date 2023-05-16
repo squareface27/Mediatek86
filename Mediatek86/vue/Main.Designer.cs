@@ -46,7 +46,7 @@ namespace Mediatek86.vue
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.grbDeveloppeur = new System.Windows.Forms.GroupBox();
+            this.modifierPersonnel = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
             this.txtMail = new System.Windows.Forms.TextBox();
             this.txtTel = new System.Windows.Forms.TextBox();
@@ -54,17 +54,9 @@ namespace Mediatek86.vue
             this.label1 = new System.Windows.Forms.Label();
             this.txtNom = new System.Windows.Forms.TextBox();
             this.grbLesDeveloppeurs = new System.Windows.Forms.GroupBox();
-            this.txtPwd1 = new System.Windows.Forms.TextBox();
-            this.grbPwd = new System.Windows.Forms.GroupBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.btnAnnulPwd = new System.Windows.Forms.Button();
-            this.btnEnregPwd = new System.Windows.Forms.Button();
-            this.txtPwd2 = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.listePersonnel)).BeginInit();
-            this.grbDeveloppeur.SuspendLayout();
+            this.modifierPersonnel.SuspendLayout();
             this.grbLesDeveloppeurs.SuspendLayout();
-            this.grbPwd.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonDisconnect
@@ -202,29 +194,29 @@ namespace Mediatek86.vue
             this.label3.TabIndex = 6;
             this.label3.Text = "tel";
             // 
-            // grbDeveloppeur
+            // modifierPersonnel
             // 
-            this.grbDeveloppeur.Controls.Add(this.btnAddProfil);
-            this.grbDeveloppeur.Controls.Add(this.btnDelProfil);
-            this.grbDeveloppeur.Controls.Add(this.txtProfil);
-            this.grbDeveloppeur.Controls.Add(this.btnAnnulDev);
-            this.grbDeveloppeur.Controls.Add(this.btnEnregDev);
-            this.grbDeveloppeur.Controls.Add(this.cboProfil);
-            this.grbDeveloppeur.Controls.Add(this.label5);
-            this.grbDeveloppeur.Controls.Add(this.label4);
-            this.grbDeveloppeur.Controls.Add(this.label3);
-            this.grbDeveloppeur.Controls.Add(this.label2);
-            this.grbDeveloppeur.Controls.Add(this.txtMail);
-            this.grbDeveloppeur.Controls.Add(this.txtTel);
-            this.grbDeveloppeur.Controls.Add(this.txtPrenom);
-            this.grbDeveloppeur.Controls.Add(this.label1);
-            this.grbDeveloppeur.Controls.Add(this.txtNom);
-            this.grbDeveloppeur.Location = new System.Drawing.Point(23, 301);
-            this.grbDeveloppeur.Name = "grbDeveloppeur";
-            this.grbDeveloppeur.Size = new System.Drawing.Size(605, 129);
-            this.grbDeveloppeur.TabIndex = 8;
-            this.grbDeveloppeur.TabStop = false;
-            this.grbDeveloppeur.Text = "ajouter un développeur";
+            this.modifierPersonnel.Controls.Add(this.btnAddProfil);
+            this.modifierPersonnel.Controls.Add(this.btnDelProfil);
+            this.modifierPersonnel.Controls.Add(this.txtProfil);
+            this.modifierPersonnel.Controls.Add(this.btnAnnulDev);
+            this.modifierPersonnel.Controls.Add(this.btnEnregDev);
+            this.modifierPersonnel.Controls.Add(this.cboProfil);
+            this.modifierPersonnel.Controls.Add(this.label5);
+            this.modifierPersonnel.Controls.Add(this.label4);
+            this.modifierPersonnel.Controls.Add(this.label3);
+            this.modifierPersonnel.Controls.Add(this.label2);
+            this.modifierPersonnel.Controls.Add(this.txtMail);
+            this.modifierPersonnel.Controls.Add(this.txtTel);
+            this.modifierPersonnel.Controls.Add(this.txtPrenom);
+            this.modifierPersonnel.Controls.Add(this.label1);
+            this.modifierPersonnel.Controls.Add(this.txtNom);
+            this.modifierPersonnel.Location = new System.Drawing.Point(23, 301);
+            this.modifierPersonnel.Name = "modifierPersonnel";
+            this.modifierPersonnel.Size = new System.Drawing.Size(605, 129);
+            this.modifierPersonnel.TabIndex = 8;
+            this.modifierPersonnel.TabStop = false;
+            this.modifierPersonnel.Text = "modifier un personnel";
             // 
             // label2
             // 
@@ -289,93 +281,21 @@ namespace Mediatek86.vue
             this.grbLesDeveloppeurs.TabStop = false;
             this.grbLesDeveloppeurs.Text = "Personnels";
             // 
-            // txtPwd1
-            // 
-            this.txtPwd1.Location = new System.Drawing.Point(54, 19);
-            this.txtPwd1.MaxLength = 50;
-            this.txtPwd1.Name = "txtPwd1";
-            this.txtPwd1.PasswordChar = '*';
-            this.txtPwd1.Size = new System.Drawing.Size(245, 20);
-            this.txtPwd1.TabIndex = 1;
-            // 
-            // grbPwd
-            // 
-            this.grbPwd.Controls.Add(this.label7);
-            this.grbPwd.Controls.Add(this.btnAnnulPwd);
-            this.grbPwd.Controls.Add(this.btnEnregPwd);
-            this.grbPwd.Controls.Add(this.txtPwd2);
-            this.grbPwd.Controls.Add(this.txtPwd1);
-            this.grbPwd.Controls.Add(this.label6);
-            this.grbPwd.Location = new System.Drawing.Point(23, 436);
-            this.grbPwd.Name = "grbPwd";
-            this.grbPwd.Size = new System.Drawing.Size(605, 77);
-            this.grbPwd.TabIndex = 9;
-            this.grbPwd.TabStop = false;
-            this.grbPwd.Text = "changer le mot de passe";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(308, 22);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(40, 13);
-            this.label7.TabIndex = 5;
-            this.label7.Text = "encore";
-            // 
-            // btnAnnulPwd
-            // 
-            this.btnAnnulPwd.Location = new System.Drawing.Point(87, 45);
-            this.btnAnnulPwd.Name = "btnAnnulPwd";
-            this.btnAnnulPwd.Size = new System.Drawing.Size(75, 23);
-            this.btnAnnulPwd.TabIndex = 4;
-            this.btnAnnulPwd.Text = "annuler";
-            this.btnAnnulPwd.UseVisualStyleBackColor = true;
-            // 
-            // btnEnregPwd
-            // 
-            this.btnEnregPwd.Location = new System.Drawing.Point(6, 45);
-            this.btnEnregPwd.Name = "btnEnregPwd";
-            this.btnEnregPwd.Size = new System.Drawing.Size(75, 23);
-            this.btnEnregPwd.TabIndex = 3;
-            this.btnEnregPwd.Text = "Enregistrer";
-            this.btnEnregPwd.UseVisualStyleBackColor = true;
-            // 
-            // txtPwd2
-            // 
-            this.txtPwd2.Location = new System.Drawing.Point(354, 19);
-            this.txtPwd2.MaxLength = 50;
-            this.txtPwd2.Name = "txtPwd2";
-            this.txtPwd2.PasswordChar = '*';
-            this.txtPwd2.Size = new System.Drawing.Size(245, 20);
-            this.txtPwd2.TabIndex = 2;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 22);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(27, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "pwd";
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1626, 550);
-            this.Controls.Add(this.grbDeveloppeur);
+            this.ClientSize = new System.Drawing.Size(1626, 454);
+            this.Controls.Add(this.modifierPersonnel);
             this.Controls.Add(this.grbLesDeveloppeurs);
-            this.Controls.Add(this.grbPwd);
             this.Controls.Add(this.buttonDisconnect);
             this.Name = "Main";
             this.Text = "Main";
             this.Load += new System.EventHandler(this.Main_Load);
             ((System.ComponentModel.ISupportInitialize)(this.listePersonnel)).EndInit();
-            this.grbDeveloppeur.ResumeLayout(false);
-            this.grbDeveloppeur.PerformLayout();
+            this.modifierPersonnel.ResumeLayout(false);
+            this.modifierPersonnel.PerformLayout();
             this.grbLesDeveloppeurs.ResumeLayout(false);
-            this.grbPwd.ResumeLayout(false);
-            this.grbPwd.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -395,7 +315,7 @@ namespace Mediatek86.vue
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.GroupBox grbDeveloppeur;
+        private System.Windows.Forms.GroupBox modifierPersonnel;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtMail;
         private System.Windows.Forms.TextBox txtTel;
@@ -403,12 +323,5 @@ namespace Mediatek86.vue
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtNom;
         private System.Windows.Forms.GroupBox grbLesDeveloppeurs;
-        private System.Windows.Forms.TextBox txtPwd1;
-        private System.Windows.Forms.GroupBox grbPwd;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button btnAnnulPwd;
-        private System.Windows.Forms.Button btnEnregPwd;
-        private System.Windows.Forms.TextBox txtPwd2;
-        private System.Windows.Forms.Label label6;
     }
 }
