@@ -474,7 +474,6 @@ namespace Mediatek86.vue
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox textBox4;
-
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button buttonSupprimerAbsence;
         private System.Windows.Forms.Button buttonModifierAbsence;

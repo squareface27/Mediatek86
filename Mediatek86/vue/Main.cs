@@ -33,6 +33,9 @@ namespace Mediatek86.vue
 
         private DataGridView dataGridViewAbsences;
 
+        /// <summary>
+        /// DataGridViewAbsences
+        /// </summary>
         public DataGridView DataGridViewAbsences
         {
             get { return dataGridViewAbsences; }
@@ -100,16 +103,6 @@ namespace Mediatek86.vue
             {
                 MessageBox.Show("Database error");
             }
-        }
-
-
-        private void buttonAjouterPersonnel_Click(object sender, EventArgs e)
-        {
-            AjouterPersonnel formAjouterPersonnel = new AjouterPersonnel();
-            DialogResult result = formAjouterPersonnel.ShowDialog(this);
-
-
-
         }
 
 
@@ -404,9 +397,7 @@ namespace Mediatek86.vue
             {
                 // Récupérer l'ID du personnel sélectionné
                 int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
-
-                // Ouvrir le formulaire AjouterAbsence en passant l'ID du personnel sélectionné
-                AjouterAbsence ajouterAbsence = new AjouterAbsence(personnelId, this);
+                AjouterAbsence ajouterAbsence = new AjouterAbsence(personnelId, this, listeAbsence);
                 ajouterAbsence.ShowDialog();
 
 
@@ -417,6 +408,9 @@ namespace Mediatek86.vue
             }
         }
 
+        /// <summary>
+        /// GetAbsence()
+        /// </summary>
         public DataTable GetAbsences()
         {
             DataTable absencesTable = new DataTable();
@@ -473,13 +467,15 @@ namespace Mediatek86.vue
                     cmd.Parameters.AddWithValue("@DateFin", selectedDateFin);
                     cmd.Connection = database.mySqlConnection;
 
+
                     // Exécuter la commande
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Absence supprimée avec succès !");
 
                     // Recharger les données du DataGridView
                     DataTable dataTable = new DataTable();
-                    MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Absence", database.mySqlConnection);
+                    MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Absence WHERE IDPERSONNEL = @PersonnelID", database.mySqlConnection);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("@PersonnelID", selectedPersonnelID);
                     dataAdapter.Fill(dataTable);
                     listeAbsence.DataSource = dataTable;
                 }
@@ -495,17 +491,32 @@ namespace Mediatek86.vue
             }
         }
 
+        /// <summary>
+        /// MotifItem
+        /// </summary>
         public class MotifItem
         {
+            /// <summary>
+            /// MotifId
+            /// </summary>
             public int MotifId { get; set; }
+            /// <summary>
+            /// Libelle
+            /// </summary>
             public string Libelle { get; set; }
 
+            /// <summary>
+            /// MotifItem
+            /// </summary>
             public MotifItem(int motifId, string libelle)
             {
                 MotifId = motifId;
                 Libelle = libelle;
             }
 
+            /// <summary>
+            /// string
+            /// </summary>
             public override string ToString()
             {
                 return Libelle;
@@ -615,7 +626,8 @@ namespace Mediatek86.vue
 
                     // Recharger les données du DataGridView
                     DataTable dataTable = new DataTable();
-                    MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Absence", database.mySqlConnection);
+                    MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Absence WHERE IDPERSONNEL = @personnelId", database.mySqlConnection);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("@personnelId", selectedPersonnelID);
                     dataAdapter.Fill(dataTable);
                     listeAbsence.DataSource = dataTable;
                 }
