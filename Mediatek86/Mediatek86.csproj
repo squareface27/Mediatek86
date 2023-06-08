@@ -141,7 +141,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Release\Mediatek86_Setup.msi" />
+    <None Include="setup\setup.exe.lnk" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -150,7 +150,6 @@
     <Folder Include="controleur\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Release\setup.exe" />
     <Content Include="script SQL\mediatek86.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
