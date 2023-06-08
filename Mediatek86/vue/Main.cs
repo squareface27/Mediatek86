@@ -495,7 +495,6 @@ namespace Mediatek86.vue
             }
         }
 
-
         public class MotifItem
         {
             public int MotifId { get; set; }
@@ -644,6 +643,5 @@ namespace Mediatek86.vue
             comboBox1.Enabled = false;
         }
 
-        
     }
 }
