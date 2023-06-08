@@ -10,6 +10,9 @@ namespace Mediatek86.vue
     /// </summary>
     public partial class AjouterPersonnel : Form
     {
+        private DataGridView listePersonnel;
+
+
         /// <summary>
         /// AjouterPersonnel
         /// </summary>
@@ -26,7 +29,7 @@ namespace Mediatek86.vue
         }
 
 
-        // Obtention des servieces selon les IDs
+        // Obtention des services selon les IDs
         private int GetServiceId(string serviceName)
         {
             int serviceId;
@@ -64,9 +67,12 @@ namespace Mediatek86.vue
                 comboBox1.Items.Add(row["nom"].ToString());
             }
 
-            Main main = (Main)Application.OpenForms["Main"];
-            DataGridView dataGridView1 = main.GetDataGridView();
         }
+
+        /// <summary>
+        /// ListePersonnel
+        /// </summary>
+        public DataGridView ListePersonnel { get; set; }
 
 
         // Bouton valider l'ajout d'un personnel
@@ -74,6 +80,18 @@ namespace Mediatek86.vue
         {
             try
             {
+                
+                if (string.IsNullOrEmpty(textBoxNom.Text) ||
+                    string.IsNullOrEmpty(textBoxPrenom.Text) ||
+                    string.IsNullOrEmpty(textBoxTelephone.Text) ||
+                    string.IsNullOrEmpty(textBoxMail.Text) ||
+                    string.IsNullOrEmpty(comboBox1.Text))
+                {
+                    MessageBox.Show("Merci de remplir tous les champs.");
+                    return; 
+                }
+
+
                 var database = new Database();
                 database.connect_db();
 
@@ -86,18 +104,22 @@ namespace Mediatek86.vue
                 cmd.Parameters.AddWithValue("@tel", textBoxTelephone.Text);
                 cmd.Parameters.AddWithValue("@mail", textBoxMail.Text);
                 cmd.ExecuteNonQuery();
+
+                DataTable dataTable = new DataTable();
+                MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT Personnel.IDPERSONNEL, Personnel.NOM, Personnel.PRENOM, Personnel.TEL, Personnel.MAIL, Service.NOM AS SERVICE FROM Personnel INNER JOIN Service ON Personnel.IDSERVICE = Service.IDSERVICE", database.mySqlConnection);
+                dataAdapter.Fill(dataTable);
+                ListePersonnel.DataSource = dataTable;
+
+
                 MessageBox.Show("Personnel ajouté avec succès !");
                 this.Close();
 
-                Main mainForm = (Main)this.Owner;
-                mainForm.loadData();
-
-
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                MessageBox.Show("Merci de remplir tout les champs");
+                MessageBox.Show("Une erreur s'est produite lors de l'ajout du personnel :\n\n" + ex.ToString());
             }
+
 
         }
 

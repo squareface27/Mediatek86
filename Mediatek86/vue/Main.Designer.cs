@@ -54,7 +54,7 @@ namespace Mediatek86.vue
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonAnnulerAbsence = new System.Windows.Forms.Button();
             this.buttonEnregistrerAbsence = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.MotifLabel = new System.Windows.Forms.Label();
@@ -273,7 +273,7 @@ namespace Mediatek86.vue
             // 
             this.groupBox1.Controls.Add(this.dateTimePicker2);
             this.groupBox1.Controls.Add(this.dateTimePicker1);
-            this.groupBox1.Controls.Add(this.button2);
+            this.groupBox1.Controls.Add(this.buttonAnnulerAbsence);
             this.groupBox1.Controls.Add(this.buttonEnregistrerAbsence);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.MotifLabel);
@@ -300,15 +300,15 @@ namespace Mediatek86.vue
             this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
             this.dateTimePicker1.TabIndex = 11;
             // 
-            // button2
+            // buttonAnnulerAbsence
             // 
-            this.button2.Location = new System.Drawing.Point(87, 98);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "annuler";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.buttonAnnulerAbsence.Location = new System.Drawing.Point(87, 98);
+            this.buttonAnnulerAbsence.Name = "buttonAnnulerAbsence";
+            this.buttonAnnulerAbsence.Size = new System.Drawing.Size(75, 23);
+            this.buttonAnnulerAbsence.TabIndex = 10;
+            this.buttonAnnulerAbsence.Text = "annuler";
+            this.buttonAnnulerAbsence.UseVisualStyleBackColor = true;
+            this.buttonAnnulerAbsence.Click += new System.EventHandler(this.button2_Click);
             // 
             // buttonEnregistrerAbsence
             // 
@@ -459,7 +459,7 @@ namespace Mediatek86.vue
         private System.Windows.Forms.GroupBox grbLesDeveloppeurs;
         private System.Windows.Forms.Button buttonAfficherAbsence;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonAnnulerAbsence;
         private System.Windows.Forms.Button buttonEnregistrerAbsence;
         private System.Windows.Forms.Label MotifLabel;
         private System.Windows.Forms.Label DateFin;

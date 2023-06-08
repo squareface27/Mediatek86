@@ -116,7 +116,7 @@ namespace Mediatek86.modele
             if (existingAbsenceCount > 0)
             {
                 MessageBox.Show("Une absence avec la même date de début et de fin pour ce personnel existe déjà.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return; // Quitter la méthode sans enregistrer l'absence
+                return;
             }
 
             MySqlCommand cmd = new MySqlCommand("INSERT INTO Absence (IDPERSONNEL, DATEDEBUT, DATEFIN, IDMOTIF) VALUES (@idpersonnel, @datedebut, @datefin, @idmotif)");

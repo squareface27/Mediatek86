@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Mediatek86.modele;
 
+
+
 namespace Mediatek86.vue
 {
     public partial class Main : Form
@@ -16,6 +18,7 @@ namespace Mediatek86.vue
         public Main()
         {
             InitializeComponent();
+            GetService();
 
         }
 
@@ -41,6 +44,7 @@ namespace Mediatek86.vue
         private void Main_Load(object sender, EventArgs e)
         {
             loadData();
+
         }
         /// <summary>
         /// Insertion des données dans dataGridView
@@ -62,10 +66,16 @@ namespace Mediatek86.vue
             dateTimePicker2.Enabled = false;
             comboBox1.Enabled = false;
 
+            btnEnregisterPersonnel.Enabled = false;
+            btnAnnulerPersonnel.Enabled = false;
+
+            buttonEnregistrerAbsence.Enabled = false;
+            buttonAnnulerAbsence.Enabled = false;
+
             var database = new Database();
             if (database.connect_db())
             {
-                string query = "SELECT * FROM personnel";
+                string query = "SELECT Personnel.IDPERSONNEL, Personnel.NOM, Personnel.PRENOM, Personnel.TEL, Personnel.MAIL, Personnel.IDSERVICE, Service.NOM AS SERVICE FROM Personnel INNER JOIN Service ON Personnel.IDSERVICE = Service.IDSERVICE";
                 MySqlCommand mySqlCommand = new MySqlCommand(query);
                 mySqlCommand.Connection = database.mySqlConnection;
                 MySqlDataAdapter adapter = new MySqlDataAdapter();
@@ -73,9 +83,17 @@ namespace Mediatek86.vue
                 DataTable dt = new DataTable();
                 adapter.Fill(dt);
                 BindingSource bindingSource = new BindingSource();
+                dt.DefaultView.Sort = "NOM ASC";
                 bindingSource.DataSource = dt;
 
                 listePersonnel.DataSource = bindingSource;
+
+                var idColumnPersonnel = listePersonnel.Columns["IDPERSONNEL"];
+                idColumnPersonnel.Visible = false;
+                var idColumnService = listePersonnel.Columns["IDSERVICE"];
+                idColumnService.Visible = false;
+
+
 
                 listePersonnel.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 listePersonnel.RowTemplate.Height = 50;
@@ -96,47 +114,14 @@ namespace Mediatek86.vue
         }
 
 
-        // Bouton supprimer un personnel
-        private void buttonSupprimerPersonnel_Click(object sender, EventArgs e)
-        {
-            if (listePersonnel.SelectedRows.Count == 1)
-            {
-                int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
-
-                try
-                {
-                    var database = new Database();
-                    database.connect_db();
-
-                    MySqlCommand cmd = new MySqlCommand("DELETE FROM Personnel WHERE IDPERSONNEL = @PersonnelId");
-                    cmd.Parameters.AddWithValue("@PersonnelId", personnelId);
-                    cmd.Connection = database.mySqlConnection;
-                    cmd.ExecuteNonQuery();
-                    MessageBox.Show("Personnel supprimé avec succès !");
-
-                    DataTable dataTable = new DataTable();
-                    MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Personnel", database.mySqlConnection);
-                    dataAdapter.Fill(dataTable);
-                    listePersonnel.DataSource = dataTable;
-                }
-                catch (Exception)
-                {
-                    MessageBox.Show("Une erreur est survenue lors de la suppression du personnel");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Veuillez sélectionner une seule ligne pour supprimer un personnel.");
-            }
-        }
-
 
         // Bouton ajouter un personnel
 
         private void buttonAjouterPersonnel_Click_1(object sender, EventArgs e)
         {
-            AjouterPersonnel formAjouterPersonnel = new AjouterPersonnel();
-            DialogResult result = formAjouterPersonnel.ShowDialog(this);
+            AjouterPersonnel ajouterPersonnelForm = new AjouterPersonnel();
+            ajouterPersonnelForm.ListePersonnel = listePersonnel;
+            ajouterPersonnelForm.ShowDialog();
 
         }
 
@@ -179,7 +164,7 @@ namespace Mediatek86.vue
 
             foreach (DataGridViewRow row in listePersonnel.Rows)
             {
-                string service = row.Cells["IDSERVICE"].Value.ToString();
+                string service = row.Cells["SERVICE"].Value.ToString();
                 int serviceId = Convert.ToInt32(row.Cells["IDSERVICE"].Value);
                 if (!services.Any(s => s.Id == serviceId))
                 {
@@ -194,6 +179,7 @@ namespace Mediatek86.vue
             cboService.DataSource = services;
         }
 
+        // Bouton modifier un personnel
 
         private void buttonModifierPersonnel_Click_1(object sender, EventArgs e)
         {
@@ -205,10 +191,12 @@ namespace Mediatek86.vue
                 string nom = selectedRow.Cells["NOM"].Value.ToString();
                 string telephone = selectedRow.Cells["TEL"].Value.ToString();
 
-                int serviceId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDSERVICE"].Value);
+                int serviceId = Convert.ToInt32(selectedRow.Cells["IDSERVICE"].Value);
                 ServiceName selectedService = services.Find(s => s.Id == serviceId);
                 cboService.SelectedItem = selectedService;
 
+                btnEnregisterPersonnel.Enabled = true;
+                btnAnnulerPersonnel.Enabled = true;
 
                 txtMail.Text = email;
                 txtPrenom.Text = prenom;
@@ -232,38 +220,48 @@ namespace Mediatek86.vue
         // Bouton supprimer un personnel
         private void buttonSupprimerPersonnel_Click_1(object sender, EventArgs e)
         {
+            if (listePersonnel.SelectedRows.Count == 1)
             {
-                if (listePersonnel.SelectedRows.Count == 1)
+                int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
+
+                var database = new Database();
+                database.connect_db();
+
+                try
                 {
-                    int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
+                    // Supprimer les enregistrements liés dans la table "absence"
+                    MySqlCommand deleteAbsenceCmd = new MySqlCommand("DELETE FROM absence WHERE IDPERSONNEL = @PersonnelId");
+                    deleteAbsenceCmd.Parameters.AddWithValue("@PersonnelId", personnelId);
+                    deleteAbsenceCmd.Connection = database.mySqlConnection;
+                    deleteAbsenceCmd.ExecuteNonQuery();
 
-                    try
-                    {
-                        var database = new Database();
-                        database.connect_db();
+                    // Supprimer le personnel dans la table "Personnel"
+                    MySqlCommand deletePersonnelCmd = new MySqlCommand("DELETE FROM Personnel WHERE IDPERSONNEL = @PersonnelId");
+                    deletePersonnelCmd.Parameters.AddWithValue("@PersonnelId", personnelId);
+                    deletePersonnelCmd.Connection = database.mySqlConnection;
+                    deletePersonnelCmd.ExecuteNonQuery();
 
-                        MySqlCommand cmd = new MySqlCommand("DELETE FROM Personnel WHERE IDPERSONNEL = @PersonnelId");
-                        cmd.Parameters.AddWithValue("@PersonnelId", personnelId);
-                        cmd.Connection = database.mySqlConnection;
-                        cmd.ExecuteNonQuery();
-                        MessageBox.Show("Personnel supprimé avec succès !");
+                    MessageBox.Show("Personnel supprimé avec succès !");
 
-                        DataTable dataTable = new DataTable();
-                        MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Personnel", database.mySqlConnection);
-                        dataAdapter.Fill(dataTable);
-                        listePersonnel.DataSource = dataTable;
-                    }
-                    catch (Exception)
-                    {
-                        MessageBox.Show("Une erreur est survenue lors de la suppression du personnel");
-                    }
+                    DataTable dataTable = new DataTable();
+                    MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT Personnel.IDPERSONNEL, Personnel.NOM, Personnel.PRENOM, Personnel.TEL, Personnel.MAIL, Personnel.IDSERVICE, Service.NOM AS SERVICE FROM Personnel INNER JOIN Service ON Personnel.IDSERVICE = Service.IDSERVICE", database.mySqlConnection);
+                    dataAdapter.Fill(dataTable);
+                    listePersonnel.DataSource = dataTable;
+
+                    var idColumnPersonnel = listePersonnel.Columns["IDPERSONNEL"];
+                    idColumnPersonnel.Visible = false;
+                    var idColumnService = listePersonnel.Columns["IDSERVICE"];
+                    idColumnService.Visible = false;
                 }
-                else
+                catch (Exception ex)
                 {
-                    MessageBox.Show("Veuillez sélectionner une seule ligne pour supprimer un personnel.");
+                    MessageBox.Show("Une erreur est survenue lors de la suppression du personnel : " + ex.Message);
                 }
             }
-
+            else
+            {
+                MessageBox.Show("Veuillez sélectionner une seule ligne pour supprimer un personnel.");
+            }
         }
 
         // Bouton annuler modification personnel
@@ -274,6 +272,9 @@ namespace Mediatek86.vue
             txtNom.Enabled = false;
             txtTel.Enabled = false;
             cboService.Enabled = false;
+
+            btnEnregisterPersonnel.Enabled = false;
+            btnAnnulerPersonnel.Enabled = false;
         }
 
         // Bouton enregistrer le personnel modifié
@@ -292,6 +293,16 @@ namespace Mediatek86.vue
 
             try
             {
+
+                if (string.IsNullOrEmpty(txtNom.Text) ||
+                    string.IsNullOrEmpty(txtPrenom.Text) ||
+                    string.IsNullOrEmpty(txtTel.Text) ||
+                    string.IsNullOrEmpty(txtMail.Text) ||
+                    string.IsNullOrEmpty(cboService.Text))
+                {
+                    MessageBox.Show("Merci de remplir tous les champs.");
+                    return;
+                }
                 var database = new Database();
                 database.connect_db();
 
@@ -313,9 +324,23 @@ namespace Mediatek86.vue
                     MessageBox.Show("Personnel mis à jour avec succès !");
 
                     DataTable dataTable = new DataTable();
-                    MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Personnel", database.mySqlConnection);
+                    MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT Personnel.IDPERSONNEL, Personnel.NOM, Personnel.PRENOM, Personnel.TEL, Personnel.MAIL, Personnel.IDSERVICE, Service.NOM AS SERVICE FROM Personnel INNER JOIN Service ON Personnel.IDSERVICE = Service.IDSERVICE", database.mySqlConnection);
                     dataAdapter.Fill(dataTable);
                     listePersonnel.DataSource = dataTable;
+
+                    var idColumnPersonnel = listePersonnel.Columns["IDPERSONNEL"];
+                    idColumnPersonnel.Visible = false;
+                    var idColumnService = listePersonnel.Columns["IDSERVICE"];
+                    idColumnService.Visible = false;
+
+                    txtMail.Enabled = false;
+                    txtPrenom.Enabled = false;
+                    txtNom.Enabled = false;
+                    txtTel.Enabled = false;
+                    cboService.Enabled = false;
+
+                    btnEnregisterPersonnel.Enabled = false;
+                    btnAnnulerPersonnel.Enabled = false;
                 }
 
             }
@@ -329,6 +354,7 @@ namespace Mediatek86.vue
         // Bouton afficher les absences d'un personnel
         private void buttonAfficherAbsence_Click(object sender, EventArgs e)
         {
+
             if (listePersonnel.SelectedRows.Count == 1)
             {
                 int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
@@ -497,6 +523,9 @@ namespace Mediatek86.vue
             dateTimePicker2.Enabled = true;
             comboBox1.Enabled = true;
 
+            buttonEnregistrerAbsence.Enabled = true;
+            buttonAnnulerAbsence.Enabled = true;
+
             if (listeAbsence.SelectedRows.Count > 0)
             {
                 selectedPersonnelID = (int)listeAbsence.SelectedRows[0].Cells["IDPERSONNEL"].Value;
@@ -584,6 +613,12 @@ namespace Mediatek86.vue
                     dataAdapter.SelectCommand.Parameters.AddWithValue("@personnelId", selectedPersonnelID);
                     dataAdapter.Fill(dataTable);
                     listeAbsence.DataSource = dataTable;
+
+                    dateTimePicker1.Enabled = false;
+                    dateTimePicker2.Enabled = false;
+
+                    buttonEnregistrerAbsence.Enabled = false;
+                    buttonAnnulerAbsence.Enabled = false;
                 }
                 else
                 {
@@ -604,6 +639,9 @@ namespace Mediatek86.vue
             dateTimePicker1.Enabled = false;
             dateTimePicker2.Enabled = false;
             comboBox1.Enabled = false;
+
+            buttonEnregistrerAbsence.Enabled = false;
+            buttonAnnulerAbsence.Enabled = false;
         }
 
     }
