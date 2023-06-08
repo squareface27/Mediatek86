@@ -465,15 +465,6 @@ namespace Mediatek86.vue
         private System.Windows.Forms.Label DateFin;
         private System.Windows.Forms.Label DadeDebut;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox textBox4;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button buttonSupprimerAbsence;
         private System.Windows.Forms.Button buttonModifierAbsence;

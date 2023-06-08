@@ -1,12 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Mediatek86.vue
@@ -25,16 +19,14 @@ namespace Mediatek86.vue
             LoadServices();
         }
 
+        // Bouton annuler l'ajout d'un nouveau personnel
         private void buttonAnnuler_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
 
-        private void AjouterPersonnel_Load(object sender, EventArgs e)
-        {
 
-        }
-
+        // Obtention des servieces selon les IDs
         private int GetServiceId(string serviceName)
         {
             int serviceId;
@@ -77,7 +69,7 @@ namespace Mediatek86.vue
         }
 
 
-
+        // Bouton valider l'ajout d'un personnel
         private void buttonValider_Click(object sender, EventArgs e)
         {
             try
@@ -95,7 +87,7 @@ namespace Mediatek86.vue
                 cmd.Parameters.AddWithValue("@mail", textBoxMail.Text);
                 cmd.ExecuteNonQuery();
                 MessageBox.Show("Personnel ajouté avec succès !");
-                this.Hide();
+                this.Close();
 
                 Main mainForm = (Main)this.Owner;
                 mainForm.loadData();

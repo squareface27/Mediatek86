@@ -182,7 +182,6 @@ namespace Mediatek86.vue
             this.Controls.Add(this.labelAjouterPersonnel);
             this.Name = "AjouterPersonnel";
             this.Text = "Ajouter un personnel";
-            this.Load += new System.EventHandler(this.AjouterPersonnel_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

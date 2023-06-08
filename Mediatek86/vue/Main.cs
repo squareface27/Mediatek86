@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Mediatek86.modele;
@@ -31,6 +27,7 @@ namespace Mediatek86.vue
             return listePersonnel;
         }
 
+        
         private DataGridView dataGridViewAbsences;
 
         /// <summary>
@@ -52,19 +49,15 @@ namespace Mediatek86.vue
         {
             GetService();
 
-            // Empêcher le redimensionnement de la fenêtre
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            // Désactiver le bouton "Agrandir"
             this.MaximizeBox = false;
 
-            // Désactiver les zones de texte de modification Personnel
             txtMail.Enabled = false;
             txtPrenom.Enabled = false;
             txtNom.Enabled = false;
             txtTel.Enabled = false;
             cboService.Enabled = false;
 
-            // Désactiver les zones de texte de modification Absence
             dateTimePicker1.Enabled = false;
             dateTimePicker2.Enabled = false;
             comboBox1.Enabled = false;
@@ -84,14 +77,11 @@ namespace Mediatek86.vue
 
                 listePersonnel.DataSource = bindingSource;
 
-
-                // Redimensionner automatiquement les colonnes pour remplir complètement le DataGridView (Liste Personnel) + désactiver le redimmensionnement mannuel + définition de la hauteur à 50px
                 listePersonnel.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 listePersonnel.RowTemplate.Height = 50;
                 listePersonnel.AllowUserToResizeColumns = false;
                 listePersonnel.AllowUserToResizeRows = false;
 
-                // Redimensionner automatiquement les colonnes pour remplir complètement le DataGridView (Absence) + désactiver le redimmensionnement mannuel + définition de la hauteur à 50px
                 listeAbsence.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 listeAbsence.RowTemplate.Height = 50;
                 listeAbsence.AllowUserToResizeColumns = false;
@@ -106,6 +96,7 @@ namespace Mediatek86.vue
         }
 
 
+        // Bouton supprimer un personnel
         private void buttonSupprimerPersonnel_Click(object sender, EventArgs e)
         {
             if (listePersonnel.SelectedRows.Count == 1)
@@ -123,7 +114,6 @@ namespace Mediatek86.vue
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Personnel supprimé avec succès !");
 
-                    // Recharger les données du DataGridView
                     DataTable dataTable = new DataTable();
                     MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Personnel", database.mySqlConnection);
                     dataAdapter.Fill(dataTable);
@@ -141,6 +131,7 @@ namespace Mediatek86.vue
         }
 
 
+        // Bouton ajouter un personnel
 
         private void buttonAjouterPersonnel_Click_1(object sender, EventArgs e)
         {
@@ -186,7 +177,6 @@ namespace Mediatek86.vue
         {
             services = new List<ServiceName>();
 
-            // Parcourez les lignes du DataGridView et ajoutez les services à la liste
             foreach (DataGridViewRow row in listePersonnel.Rows)
             {
                 string service = row.Cells["IDSERVICE"].Value.ToString();
@@ -197,12 +187,10 @@ namespace Mediatek86.vue
                 }
             }
 
-            // Ajoutez les autres services disponibles à la liste
             services.Add(new ServiceName("Administratif", 1));
             services.Add(new ServiceName("Médiation culturelle", 2));
             services.Add(new ServiceName("Prêt", 3));
 
-            // Liez la liste à la ComboBox
             cboService.DataSource = services;
         }
 
@@ -211,7 +199,6 @@ namespace Mediatek86.vue
         {
             if (listePersonnel.SelectedRows.Count == 1)
             {
-                // Récupérer les valeurs de la ligne sélectionnée
                 DataGridViewRow selectedRow = listePersonnel.SelectedRows[0];
                 string email = selectedRow.Cells["MAIL"].Value.ToString();
                 string prenom = selectedRow.Cells["PRENOM"].Value.ToString();
@@ -223,16 +210,11 @@ namespace Mediatek86.vue
                 cboService.SelectedItem = selectedService;
 
 
-
-                // ...
-
-                // Assigner les valeurs aux zones de texte
                 txtMail.Text = email;
                 txtPrenom.Text = prenom;
                 txtNom.Text = nom;
                 txtTel.Text = telephone;
 
-                // Activer les zones de texte pour modification
                 txtMail.Enabled = true;
                 txtPrenom.Enabled = true;
                 txtNom.Enabled = true;
@@ -240,7 +222,6 @@ namespace Mediatek86.vue
                 cboService.Enabled = true;
 
 
-                // ...
             }
             else
             {
@@ -248,6 +229,7 @@ namespace Mediatek86.vue
             }
         }
 
+        // Bouton supprimer un personnel
         private void buttonSupprimerPersonnel_Click_1(object sender, EventArgs e)
         {
             {
@@ -266,7 +248,6 @@ namespace Mediatek86.vue
                         cmd.ExecuteNonQuery();
                         MessageBox.Show("Personnel supprimé avec succès !");
 
-                        // Recharger les données du DataGridView
                         DataTable dataTable = new DataTable();
                         MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Personnel", database.mySqlConnection);
                         dataAdapter.Fill(dataTable);
@@ -285,9 +266,9 @@ namespace Mediatek86.vue
 
         }
 
+        // Bouton annuler modification personnel
         private void btnAnnulerPersonnel_Click(object sender, EventArgs e)
         {
-            // Désactiver les zones de texte de modification
             txtMail.Enabled = false;
             txtPrenom.Enabled = false;
             txtNom.Enabled = false;
@@ -295,19 +276,17 @@ namespace Mediatek86.vue
             cboService.Enabled = false;
         }
 
+        // Bouton enregistrer le personnel modifié
         private void btnEnregisterPersonnel_Click(object sender, EventArgs e)
         {
 
-            // Récupérer l'ID du personnel sélectionné
             int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
 
-            // Récupérer les nouvelles valeurs des zones de texte
             string email = txtMail.Text;
             string prenom = txtPrenom.Text;
             string nom = txtNom.Text;
             string telephone = txtTel.Text;
 
-            // Récupérer la valeur sélectionnée dans la ComboBox
             ServiceName selectedService = (ServiceName)cboService.SelectedItem;
             int serviceId = selectedService.Id;
 
@@ -316,7 +295,6 @@ namespace Mediatek86.vue
                 var database = new Database();
                 database.connect_db();
 
-                // Construire la requête de mise à jour
                 string query = "UPDATE Personnel SET MAIL = @mail, PRENOM = @prenom, NOM = @nom, TEL = @tel, IDSERVICE = @idservice WHERE IDPERSONNEL = @personnelId";
 
                 MySqlCommand cmd = new MySqlCommand(query);
@@ -328,14 +306,12 @@ namespace Mediatek86.vue
                 cmd.Parameters.AddWithValue("@idservice", serviceId);
                 cmd.Parameters.AddWithValue("@personnelId", personnelId);
 
-                // Exécuter la requête de mise à jour
                 int rowsAffected = cmd.ExecuteNonQuery();
 
                 if (rowsAffected > 0)
                 {
                     MessageBox.Show("Personnel mis à jour avec succès !");
 
-                    // Recharger les données du DataGridView
                     DataTable dataTable = new DataTable();
                     MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Personnel", database.mySqlConnection);
                     dataAdapter.Fill(dataTable);
@@ -350,11 +326,11 @@ namespace Mediatek86.vue
 
         }
 
+        // Bouton afficher les absences d'un personnel
         private void buttonAfficherAbsence_Click(object sender, EventArgs e)
         {
             if (listePersonnel.SelectedRows.Count == 1)
             {
-                // Récupérer l'ID du personnel sélectionné
                 int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
 
                 try
@@ -362,20 +338,17 @@ namespace Mediatek86.vue
                     var database = new Database();
                     database.connect_db();
 
-                    // Construire la requête pour récupérer les absences du personnel sélectionné
                     string query = "SELECT * FROM Absence WHERE IDPERSONNEL = @personnelId";
                     MySqlCommand cmd = new MySqlCommand(query);
                     cmd.Connection = database.mySqlConnection;
                     cmd.Parameters.AddWithValue("@personnelId", personnelId);
 
-                    // Exécuter la requête et récupérer les résultats dans un DataTable
                     DataTable absencesTable = new DataTable();
                     using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
                     {
                         adapter.Fill(absencesTable);
                     }
 
-                    // Afficher les résultats dans le deuxième DataGridView
                     listeAbsence.DataSource = absencesTable;
                 }
                 catch (Exception ex)
@@ -389,13 +362,11 @@ namespace Mediatek86.vue
             }
         }
 
-
+        // Bouton ajouter une absence
         private void buttonAjouterAbsence_Click(object sender, EventArgs e)
         {
-            // Vérifier si une ligne est sélectionnée dans le DataGridView
             if (listePersonnel.SelectedRows.Count == 1)
             {
-                // Récupérer l'ID du personnel sélectionné
                 int personnelId = Convert.ToInt32(listePersonnel.SelectedRows[0].Cells["IDPERSONNEL"].Value);
                 AjouterAbsence ajouterAbsence = new AjouterAbsence(personnelId, this, listeAbsence);
                 ajouterAbsence.ShowDialog();
@@ -420,12 +391,10 @@ namespace Mediatek86.vue
                 var database = new Database();
                 database.connect_db();
 
-                // Construire la requête pour récupérer les absences du personnel sélectionné
                 string query = "SELECT * FROM Absence";
                 MySqlCommand cmd = new MySqlCommand(query);
                 cmd.Connection = database.mySqlConnection;
 
-                // Exécuter la requête et récupérer les résultats dans un DataTable
                 using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
                 {
                     adapter.Fill(absencesTable);
@@ -439,13 +408,11 @@ namespace Mediatek86.vue
             return absencesTable;
         }
 
-
+        // Bouton supprimer une absence
         private void buttonSupprimerAbsence_Click(object sender, EventArgs e)
         {
-            // Vérifier si une ligne est sélectionnée dans le DataGridView
             if (listeAbsence.SelectedRows.Count > 0)
             {
-                // Récupérer les valeurs des colonnes nécessaires pour la ligne sélectionnée
                 int selectedPersonnelID = (int)listeAbsence.SelectedRows[0].Cells["IDPERSONNEL"].Value;
                 DateTime selectedDateDebut = (DateTime)listeAbsence.SelectedRows[0].Cells["DATEDEBUT"].Value;
                 int selectedMotifID = (int)listeAbsence.SelectedRows[0].Cells["IDMOTIF"].Value;
@@ -456,23 +423,18 @@ namespace Mediatek86.vue
                     var database = new Database();
                     database.connect_db();
 
-                    // Créer une commande SQL pour supprimer la ligne en utilisant les valeurs récupérées
                     string query = "DELETE FROM Absence WHERE IDPERSONNEL = @PersonnelID AND DATEDEBUT = @DateDebut AND IDMOTIF = @MotifID AND DATEFIN = @DateFin";
                     MySqlCommand cmd = new MySqlCommand(query);
 
-                    // Ajouter les paramètres pour les valeurs récupérées
                     cmd.Parameters.AddWithValue("@PersonnelID", selectedPersonnelID);
                     cmd.Parameters.AddWithValue("@DateDebut", selectedDateDebut);
                     cmd.Parameters.AddWithValue("@MotifID", selectedMotifID);
                     cmd.Parameters.AddWithValue("@DateFin", selectedDateFin);
                     cmd.Connection = database.mySqlConnection;
 
-
-                    // Exécuter la commande
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Absence supprimée avec succès !");
 
-                    // Recharger les données du DataGridView
                     DataTable dataTable = new DataTable();
                     MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Absence WHERE IDPERSONNEL = @PersonnelID", database.mySqlConnection);
                     dataAdapter.SelectCommand.Parameters.AddWithValue("@PersonnelID", selectedPersonnelID);
@@ -528,28 +490,22 @@ namespace Mediatek86.vue
         private int ancienMotifID;
         private DateTime ancienneDateFin;
 
-
+        // Bouton modifier une absence
         private void buttonModifierAbsence_Click(object sender, EventArgs e)
         {
-            // Active les zones de texte de modification Absence
             dateTimePicker1.Enabled = true;
             dateTimePicker2.Enabled = true;
             comboBox1.Enabled = true;
 
-            // Vérifier si une ligne est sélectionnée dans le DataGridView
             if (listeAbsence.SelectedRows.Count > 0)
             {
-                // Récupérer les valeurs des colonnes nécessaires pour la ligne sélectionnée
                 selectedPersonnelID = (int)listeAbsence.SelectedRows[0].Cells["IDPERSONNEL"].Value;
                 ancienneDateDebut = (DateTime)listeAbsence.SelectedRows[0].Cells["DATEDEBUT"].Value;
                 int selectedMotifID = (int)listeAbsence.SelectedRows[0].Cells["IDMOTIF"].Value;
                 DateTime selectedDateFin = (DateTime)listeAbsence.SelectedRows[0].Cells["DATEFIN"].Value;
 
-                // Utiliser les valeurs pour définir les propriétés des contrôles appropriés
-                // DateTimePicker pour les dates
                 dateTimePicker1.Value = ancienneDateDebut;
                 dateTimePicker2.Value = selectedDateFin;
-
 
 
                 var database = new Database();
@@ -592,7 +548,7 @@ namespace Mediatek86.vue
         }
 
 
-
+        // Bouton enregistrer l'absence
 
         private void buttonEnregistrerAbsence_Click(object sender, EventArgs e)
         {
@@ -617,14 +573,12 @@ namespace Mediatek86.vue
                 cmd.Parameters.AddWithValue("@ancienneDateFin", ancienneDateFin);
                 cmd.Parameters.AddWithValue("@ancienMotifID", ancienMotifID);
 
-                // Exécuter la requête de mise à jour
                 int rowsAffected = cmd.ExecuteNonQuery();
 
                 if (rowsAffected > 0)
                 {
                     MessageBox.Show("Absence mise à jour avec succès !");
 
-                    // Recharger les données du DataGridView
                     DataTable dataTable = new DataTable();
                     MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Absence WHERE IDPERSONNEL = @personnelId", database.mySqlConnection);
                     dataAdapter.SelectCommand.Parameters.AddWithValue("@personnelId", selectedPersonnelID);
@@ -643,13 +597,10 @@ namespace Mediatek86.vue
         }
 
 
-
-
-
+        // Bouton annuler la modification de l'absence
 
         private void button2_Click(object sender, EventArgs e)
         {
-            // Désactiver les zones de texte de modification
             dateTimePicker1.Enabled = false;
             dateTimePicker2.Enabled = false;
             comboBox1.Enabled = false;

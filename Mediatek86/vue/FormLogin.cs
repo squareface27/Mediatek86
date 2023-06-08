@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 
@@ -27,6 +22,7 @@ namespace Mediatek86.vue
             InitializeComponent();
         }
 
+        // Bouton se connecter
         private void button1_Click(object sender, EventArgs e)
         {
             if (textUsername.Text == "")
@@ -100,26 +96,9 @@ namespace Mediatek86.vue
 
         }
 
-        private void lblEspace_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textUsername_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textPassword_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void FormLogin_Load(object sender, EventArgs e)
         {
-            // Empêcher le redimensionnement de la fenêtre
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            // Désactiver le bouton "Agrandir"
             this.MaximizeBox = false;
         }
 

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
 using Mediatek86.vue;
@@ -19,9 +13,14 @@ namespace Mediatek86.modele
     {
         private int personnelId;
         private DataGridView listeAbsence;
-        private Main mainForm;
 
 
+        /// <summary>
+        /// AjouterAbsence
+        /// </summary>
+        /// 
+
+        // Ajout des motifs d'absence dans la comboBox
         public AjouterAbsence(int idPersonnel, Main formPrincipal, DataGridView listeAbsence)
         {
             InitializeComponent();
@@ -75,42 +74,59 @@ namespace Mediatek86.modele
         /// </summary>
         public DataGridView ListeAbsence { get; set; }
 
-        /// <summary>
-        /// AjouterAbsence
-        /// </summary>
 
 
+        // Clic sur le bouton pour enregistrer l'absence
 
         private void buttonValider_Click(object sender, EventArgs e)
         {
-            try
-            {
-                // Récupérer les valeurs saisies par l'utilisateur
+            
+                
                 DateTime dateDebut = dateTimePickerDebut.Value.Date;
                 DateTime dateFin = dateTimePickerFin.Value.Date;
-                MotifItem selectedMotif = (MotifItem)comboBoxMotif.SelectedItem;
-                int motifId = selectedMotif.Id;
+            MotifItem selectedMotif = (MotifItem)comboBoxMotif.SelectedItem;
+            if (selectedMotif == null)
+            {
+                MessageBox.Show("Veuillez sélectionner un motif d'absence.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; 
+            }
+            int motifId = selectedMotif.Id;
 
-                // Vérifier les conditions nécessaires pour l'enregistrement de l'absence
-                if (dateFin < dateDebut)
+
+            
+            if (dateFin < dateDebut)
                 {
                     MessageBox.Show("La date de fin doit être postérieure à la date de début.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return; // Quitter la méthode sans enregistrer l'absence
+                    return; 
                 }
 
-                // Enregistrer l'absence dans la base de données
+
+                
                 var database = new Database();
                 database.connect_db();
-                MySqlCommand cmd = new MySqlCommand("INSERT INTO Absence (IDPERSONNEL, DATEDEBUT, DATEFIN, IDMOTIF) VALUES (@idpersonnel, @datedebut, @datefin, @idmotif)");
+
+
+            MySqlCommand checkCommand = new MySqlCommand("SELECT COUNT(*) FROM Absence WHERE IDPERSONNEL = @idpersonnel AND DATEDEBUT = @datedebut AND DATEFIN = @datefin", database.mySqlConnection);
+            checkCommand.Parameters.AddWithValue("@idpersonnel", personnelId);
+            checkCommand.Parameters.AddWithValue("@datedebut", dateDebut);
+            checkCommand.Parameters.AddWithValue("@datefin", dateFin);
+
+            int existingAbsenceCount = Convert.ToInt32(checkCommand.ExecuteScalar());
+
+            if (existingAbsenceCount > 0)
+            {
+                MessageBox.Show("Une absence avec la même date de début et de fin pour ce personnel existe déjà.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return; // Quitter la méthode sans enregistrer l'absence
+            }
+
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO Absence (IDPERSONNEL, DATEDEBUT, DATEFIN, IDMOTIF) VALUES (@idpersonnel, @datedebut, @datefin, @idmotif)");
                 cmd.Connection = database.mySqlConnection;
-                cmd.Parameters.AddWithValue("@idpersonnel", personnelId); // Utiliser l'idpersonnel sélectionné
+                cmd.Parameters.AddWithValue("@idpersonnel", personnelId); 
                 cmd.Parameters.AddWithValue("@datedebut", dateDebut);
                 cmd.Parameters.AddWithValue("@datefin", dateFin);
                 cmd.Parameters.AddWithValue("@idmotif", motifId);
                 cmd.ExecuteNonQuery();
 
-
-                // Recharger les données du DataGridView
                 DataTable dataTable = new DataTable();
                 MySqlDataAdapter dataAdapter = new MySqlDataAdapter("SELECT * FROM Absence WHERE IDPERSONNEL = @idpersonnel", database.mySqlConnection);
                 dataAdapter.SelectCommand.Parameters.AddWithValue("@idpersonnel", personnelId);
@@ -120,19 +136,19 @@ namespace Mediatek86.modele
                 MessageBox.Show("Absence enregistrée avec succès !");
 
 
-                this.Close(); // Fermer le formulaire d'ajout d'absence
+                this.Close(); 
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Une erreur est survenue lors de l'enregistrement de l'absence : " + ex.Message, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
+
+            
+
+        // Clic sur le bouton annuler dans le formulaire d'ajout d'absence
 
         private void buttonAnnuler_Click_1(object sender, EventArgs e)
         {
-            // Fermer le formulaire AjouterAbsence
+            
             this.Close();
         }
+
     }
 
 }

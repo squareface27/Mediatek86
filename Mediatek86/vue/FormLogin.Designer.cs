@@ -62,7 +62,6 @@ namespace Mediatek86.vue
             this.textUsername.Name = "textUsername";
             this.textUsername.Size = new System.Drawing.Size(165, 20);
             this.textUsername.TabIndex = 2;
-            this.textUsername.TextChanged += new System.EventHandler(this.textUsername_TextChanged);
             // 
             // textPassword
             // 
@@ -71,7 +70,6 @@ namespace Mediatek86.vue
             this.textPassword.PasswordChar = '*';
             this.textPassword.Size = new System.Drawing.Size(165, 20);
             this.textPassword.TabIndex = 3;
-            this.textPassword.TextChanged += new System.EventHandler(this.textPassword_TextChanged);
             // 
             // lblEspace
             // 
@@ -81,7 +79,6 @@ namespace Mediatek86.vue
             this.lblEspace.Size = new System.Drawing.Size(193, 13);
             this.lblEspace.TabIndex = 4;
             this.lblEspace.Text = "Bienvenue dans l\'espace de connexion";
-            this.lblEspace.Click += new System.EventHandler(this.lblEspace_Click);
             // 
             // labelUsername
             // 

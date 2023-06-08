@@ -83,12 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BddManager\Database.cs" />
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
     <Compile Include="modele\AjouterAbsence.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,12 +102,6 @@
     </Compile>
     <Compile Include="vue\FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
-    </Compile>
-    <Compile Include="vue\FrmHabilitations.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="vue\FrmHabilitations.designer.cs">
-      <DependentUpon>FrmHabilitations.cs</DependentUpon>
     </Compile>
     <Compile Include="vue\Main.cs">
       <SubType>Form</SubType>
@@ -138,9 +126,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="vue\FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="vue\FrmHabilitations.resx">
-      <DependentUpon>FrmHabilitations.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="vue\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
